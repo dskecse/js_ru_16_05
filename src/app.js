@@ -2,6 +2,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import ArticleList from './components/ArticleList'
 
+const mountNode = document.getElementById("container")
+
 export const articles = [
     {
         "id": "56c782f18990ecf954f6e027",
@@ -95,4 +97,5 @@ export const articles = [
         "text": "Commodo laborum sit nostrud reprehenderit cupidatat officia laboris. Ipsum minim culpa in enim. Voluptate dolor ea irure nisi incididunt enim magna.\n\nCupidatat quis cillum velit culpa tempor esse irure nostrud ea consectetur officia fugiat irure qui. Enim quis officia do in. Velit veniam ipsum consequat aliqua duis voluptate. Minim nisi ex aute ad.\n\nNisi Lorem ex tempor adipisicing labore. Quis occaecat fugiat pariatur labore culpa cillum laboris. Labore occaecat ut laborum sit ex do sit. Deserunt consectetur elit aute laboris est deserunt officia ullamco sit laboris officia aliquip. Aliqua ut sunt nostrud voluptate excepteur quis incididunt Lorem ut.",
     }
 ]
-render(<ArticleList articles = {articles}/>, document.getElementById('container'))
+
+render(<ArticleList articles={articles} />, mountNode)
