@@ -2,7 +2,7 @@ import Article from './Article'
 import BasicStore from './BasicStore'
 import { normalizedArticles, normalizedComments } from '../fixtures'
 
-const stores = {}
+export const stores = {}
 
 Object.assign(stores, {
     articles: new Article(stores, normalizedArticles),
@@ -11,5 +11,3 @@ Object.assign(stores, {
 
 export const commentStore = stores.comments
 export const articleStore = stores.articles
-
-window.stores = stores
