@@ -8,6 +8,6 @@ export default class DataWrapper {
         const stores = this._store.getStores()
         const relStore = stores[relation]
         if (!relStore || !this[relation]) return []
-        return this[relation].map(relStore.getById)
+        return this[relation].map(relStore.getById).filter(Boolean)
     }
 }
