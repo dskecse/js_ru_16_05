@@ -1,5 +1,5 @@
 import { normalizedArticles } from '../fixtures'
-import { DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, SUCCESS, START } from '../constants'
+import { DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_COMMENTS_FOR_ARTICLE, SUCCESS, START } from '../constants'
 import { fromArray } from '../utils'
 import { fromJS } from 'immutable'
 
@@ -30,6 +30,14 @@ export default (state = defaultState, action) => {
                 ["entities", payload.articleId, "comments"],
                 comments => comments.push(randomId)
             )
+
+        case LOAD_COMMENTS_FOR_ARTICLE + START:
+            return state.setIn(["entities", payload.id, "loadingComments"], true)
+
+        case LOAD_COMMENTS_FOR_ARTICLE + SUCCESS:
+            return state
+                .setIn(["entities", payload.id, "loadingComments"], false)
+                .setIn(["entities", payload.id, "loadedComments"], true)
     }
 
     return state

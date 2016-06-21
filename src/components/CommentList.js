@@ -3,10 +3,15 @@ import Comment from './Comment'
 import toggleOpen from '../decorators/toggleOpen'
 import NewCommentForm from './NewCommentForm'
 import { getRelation } from '../utils'
+import { loadComments } from "../AC/comments"
+import { connect } from "react-redux"
 
 class CommentList extends Component {
     static propTypes = {
-        article: PropTypes.object.isRequired
+        article: PropTypes.object.isRequired,
+        isOpen: PropTypes.bool.isRequired,
+        toggleOpen: PropTypes.func,
+        loadComments: PropTypes.func.isRequired
     };
 
     static contextTypes = {
@@ -14,12 +19,10 @@ class CommentList extends Component {
         user: PropTypes.string
     }
 
-/*
-    componentWillReceiveProps({ isOpen, article }) {
-        if (isOpen && !article.loadedComments && !article.loadingComments) loadComments({ id: article.id })
-        console.log('---', 'context', this.context)
+    componentWillReceiveProps({ isOpen, article, loadComments }) {
+        if (!isOpen || article.loadedComments || article.loadingComments) return
+        loadComments(article.id)
     }
-*/
 
     render() {
         return (
@@ -42,10 +45,9 @@ class CommentList extends Component {
 
         const comments = getRelation(article, 'comments')
         if (!isOpen) return null
-/*
         if (!article.loadedComments) return <h3>Loading...</h3>
-*/
         if (!comments || !comments.length) return <h3>No comments yet</h3>
+
         const items = comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)
         return <ul>
             {items}
@@ -54,4 +56,4 @@ class CommentList extends Component {
     }
 }
 
-export default toggleOpen(CommentList)
+export default connect(null, { loadComments })(toggleOpen(CommentList))
