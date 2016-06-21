@@ -21,13 +21,15 @@ export default (state = defaultState, action) => {
                 .update('entities', entities => entities.merge(fromJS(fromArray(response))))
 //            return {...state, loading: false, entities: {...state.entities, ...fromArray(response)}}
 
-/*
-        case DELETE_ARTICLE: return articles.filter(article => article.id != payload.id)
+        case DELETE_ARTICLE:
+            // FIXME: This does not preserve the original order.
+            return state.deleteIn(["entities", payload.id])
 
-        case ADD_COMMENT: return articles.map(article => payload.articleId != article.id ? article :
-            {...article, comments: (article.comments || []).concat(randomId)}
-        )
-*/
+        case ADD_COMMENT:
+            return state.updateIn(
+                ["entities", payload.articleId, "comments"],
+                comments => comments.push(randomId)
+            )
     }
 
     return state
